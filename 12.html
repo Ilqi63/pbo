@@ -3,21 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>GUI Sederhana</title>
+    <title>GUI Gabungan Sederhana</title>
+    <style>
+        .section {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1 id="title">Halo, Mahasiswa!</h1>
+
+    <div class="section">
+        <h2>Contoh 1: Mengubah Teks</h2>
+        <h1 id="title">Halo, Mahasiswa!</h1>
+        <button onclick="ubahTeks()">Klik Saya</button>
+    </div>
+
+    <hr>
     
-    <button onclick="ubahTeks()">Klik Saya</button>
+    <div class="section">
+        <h2>Contoh 2: Form Input Nama</h2>
+        <h1>Masukkan Nama Anda</h1>
+        <input type="text" id="namelnput" placeholder="Nama Anda"> 
+        <button onclick="tampilkanNama()">Submit</button> 
+        <h2 id="output"></h2>
+    </div>
     
     <script>
-        /**
-         * Fungsi ini mengubah teks dari elemen <h1> 
-         * dengan id "title".
-         */
+        // FUNGSI UNTUK CONTOH 1 (Mengubah Teks)
         function ubahTeks() {
-            // Mengambil elemen berdasarkan ID dan mengubah teksnya
+            // document.getElementById("title").innerText = "Teks telah berubah!"; //
             document.getElementById("title").innerText = "Teks telah berubah!";
+        }
+
+        // FUNGSI UNTUK CONTOH 2 (Form Input Nama)
+        function tampilkanNama() {
+            // Mengambil nilai (value) dari input dengan id="namelnput"
+            let nama = document.getElementById("namelnput").value;
+            
+            // Menampilkan hasil di elemen <h2> dengan id="output"
+            document.getElementById("output").innerText = "Halo, " + nama + "!";
         }
     </script>
 </body>
