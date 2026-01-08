@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Login Modern</title>
+  <style>
+    /* Reset & Font */
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Background gradasi baru yang lebih profesional */
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #333;
+    }
+
+    /* Card Design dengan efek Glassmorphism */
+    .box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      width: 380px;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #2c3e50;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    p.subtitle {
+      color: #7f8c8d;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    /* Input Styling */
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      border: 1px solid #dfe6e9;
+      background: #f9f9f9;
+      font-size: 15px;
+      transition: all 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #3498db;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+    }
+
+    /* Button Styling */
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    #loginBtn {
+      background: #3498db;
+      color: white;
+      margin-top: 10px;
+    }
+
+    #loginBtn:hover {
+      background: #2980b9;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    #cancelBtn {
+      margin-top: 12px;
+      background: transparent;
+      color: #95a5a6;
+      border: 1px solid #dfe6e9;
+    }
+
+    #cancelBtn:hover {
+      background: #f8f9fa;
+      color: #7f8c8d;
+    }
+
+    #logoutBtn {
+      margin-top: 20px;
+      background: #ff7675;
+      color: white;
+    }
+
+    #logoutBtn:hover {
+      background: #d63031;
+    }
+
+    .success-icon {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box" id="app"></div>
+
+  <script>
+    class LoginApp {
+      constructor(containerId) {
+        this.container = document.getElementById(containerId);
+        this.initData();
+        this.renderLogin();
+      }
+
+      initData() {
+        // Mengubah data user sesuai permintaan
+        const users = [
+          { username: 'ilqi', password: 'ilq123' },
+          { username: 'admin', password: 'admin' }
+        ];
+        localStorage.setItem('users', JSON.stringify(users));
+      }
+
+      renderLogin() {
+        this.container.innerHTML = `
+          <h2>Selamat Datang</h2>
+          <p class="subtitle">Silakan masuk ke akun Anda</p>
+          <input type="text" id="username" placeholder="Username">
+          <input type="password" id="password" placeholder="Password">
+          <button id="loginBtn">Masuk Sekarang</button>
+          <button id="cancelBtn">Bersihkan</button>
+        `;
+
+        document.getElementById('loginBtn')
+          .addEventListener('click', () => this.login());
+
+        document.getElementById('cancelBtn')
+          .addEventListener('click', () => this.cancel());
+      }
+
+      login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const users = JSON.parse(localStorage.getItem('users'));
+
+        const found = users.find(
+          user => user.username === username && user.password === password
+        );
+
+        if (!found) {
+          alert('Username atau password tidak sesuai.');
+        } else {
+          this.renderUserPage(found.username);
+        }
+      }
+
+      renderUserPage(username) {
+        this.container.innerHTML = `
+          <div class="user-info">
+            <div class="success-icon">👤</div>
+            <h2>Halo, ${username}!</h2>
+            <p>Anda telah berhasil masuk ke dalam dashboard aplikasi.</p>
+            <button id="logoutBtn">Keluar Sistem</button>
+          </div>
+        `;
+
+        document.getElementById('logoutBtn')
+          .addEventListener('click', () => this.logout());
+      }
+
+      logout() {
+        this.renderLogin();
+      }
+
+      cancel() {
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+      }
+    }
+
+    const app = new LoginApp('app');
+  </script>
+
+</body>
+</html>
